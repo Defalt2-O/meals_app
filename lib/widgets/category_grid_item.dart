@@ -16,7 +16,7 @@ class CategoryGridItem extends StatelessWidget {
       onTap: () {},
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(
-          16), //provides border (round edges) radius only to highlightinh section
+          16), //provides border (round edges) radius only to highlighting section
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
