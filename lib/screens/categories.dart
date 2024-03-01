@@ -12,12 +12,14 @@ class CategoriesScreen extends StatelessWidget {
         title: const Text('Pick your Category'),
       ),
       body: GridView(
+        //Creates a Grid Like Structure
         padding: const EdgeInsets.all(24),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
+          //Delegates rows and columns to the grid. Sliver object defines
+          crossAxisCount: 2, //no of columns i.e. main axis is rows
+          childAspectRatio: 3 / 2, //sizing
+          crossAxisSpacing: 20, //space between columns
+          mainAxisSpacing: 20, //space between rows
         ),
         children: [
           ...availableCategories
