@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
-import 'package:meals_app/screens/meal_details.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:meals_app/widgets/meal_item_trait.dart';
 
@@ -40,7 +39,6 @@ class MealItem extends StatelessWidget {
             //directly to ontap outside an anon func also works.
             onSelectMeal,
         child: Stack(
-          clipBehavior: Clip.hardEdge,
           //Stacks items above one another
           children: [
             FadeInImage(
