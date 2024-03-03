@@ -24,32 +24,27 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pick your Category'),
+    return GridView(
+      //Creates a Grid Like Structure
+      padding: const EdgeInsets.all(24),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //Delegates rows and columns to the grid. Sliver object defines
+        crossAxisCount: 2, //no of columns i.e. main axis is rows
+        childAspectRatio: 3 / 2, //sizing
+        crossAxisSpacing: 20, //space between columns
+        mainAxisSpacing: 20, //space between rows
       ),
-      body: GridView(
-        //Creates a Grid Like Structure
-        padding: const EdgeInsets.all(24),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //Delegates rows and columns to the grid. Sliver object defines
-          crossAxisCount: 2, //no of columns i.e. main axis is rows
-          childAspectRatio: 3 / 2, //sizing
-          crossAxisSpacing: 20, //space between columns
-          mainAxisSpacing: 20, //space between rows
-        ),
-        children: [
-          ...availableCategories.map(
-            (category) => CategoryGridItem(
-              category: category,
-              onSelectCategory: () {
-                _selectCategory(context,
-                    category); //sends context of build Widget to selectCategory
-              },
-            ),
+      children: [
+        ...availableCategories.map(
+          (category) => CategoryGridItem(
+            category: category,
+            onSelectCategory: () {
+              _selectCategory(context,
+                  category); //sends context of build Widget to selectCategory
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
