@@ -12,6 +12,7 @@ class CategoriesScreen extends StatelessWidget {
         .where((meal) => meal.categories.contains(category.id))
         .toList();
     Navigator.push(
+      //ctx content is pushed onto context content (Build WIdget content)
       context,
       MaterialPageRoute(
         builder: (ctx) {
@@ -42,7 +43,8 @@ class CategoriesScreen extends StatelessWidget {
             (category) => CategoryGridItem(
               category: category,
               onSelectCategory: () {
-                _selectCategory(context, category);
+                _selectCategory(context,
+                    category); //sends context of build Widget to selectCategory
               },
             ),
           ),

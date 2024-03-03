@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/screens/meal_details.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:meals_app/widgets/meal_item_trait.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({
+    super.key,
+    required this.meal,
+    required this.onSelectMeal,
+  });
 
   final Meal meal;
+  final void Function() onSelectMeal;
 
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
@@ -28,7 +34,11 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap:
+            //ontap executes the immediate function after it, therefore inside the anon func, it only assigns pointer
+            //onSelectMeal to ontap, but doesn't execute it unless we type onSelectMeal(). Therefore sending only onSelectMeal
+            //directly to ontap outside an anon func also works.
+            onSelectMeal,
         child: Stack(
           clipBehavior: Clip.hardEdge,
           //Stacks items above one another
