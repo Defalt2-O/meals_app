@@ -54,16 +54,17 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
-  void _setScreen(String identifier) {
+  void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      Navigator.of(context).push(
+      final result = await Navigator.of(context).push<Map<Filters, bool>>(
         //Using push replacement causes the screen to not be pushed onto the stack of screens,
         //but to replace the currently viewed screen. Push replacement also doesn't add the back button.
         MaterialPageRoute(
           builder: (ctx) => const FiltersScreen(),
         ),
       );
+      print(result);
     }
   }
 

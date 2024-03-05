@@ -43,10 +43,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
       //   },
       // ),
       body: PopScope(
-        canPop: false,
+        //This is called when the system back button is used.
+        canPop:
+            false, //We dont let it pop immediately because we still need some data
         onPopInvoked: (bool didPop) {
+          //As canPop was false, didPop was false as the system did not pop.
           if (didPop) return;
           Navigator.of(context).pop(
+            //We manually pop back and send data as we do back to the tabs screen.
             {
               Filters.glutenFree: _glutenFreeFilterSet,
               Filters.lactoseFree: _lactoseFreeFilterSet,
