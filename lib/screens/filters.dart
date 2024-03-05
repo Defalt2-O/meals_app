@@ -18,7 +18,20 @@ class _FiltersScreenState extends State<FiltersScreen> {
       appBar: AppBar(
         title: const Text('Your Filters!'),
       ),
-      // drawer: MainDrawer(onSelectScreen: onSelectScreen),
+      // drawer: MainDrawer(
+      //   onSelectScreen: (identifier) {
+      //     Navigator.of(context).pop();
+      //     if (identifier == 'filters') {
+      //       Navigator.of(context).pushReplacement(
+      //         .//Using push replacement causes the screen to not be pushed onto the stack of screens,
+      //         .//but to replace the currently viewed screen.
+      //         MaterialPageRoute(
+      //           builder: (ctx) => const FiltersScreen(),
+      //         ),
+      //       );
+      //     }
+      //   },
+      // ),
       body: Column(
         children: [
           SwitchListTile(
