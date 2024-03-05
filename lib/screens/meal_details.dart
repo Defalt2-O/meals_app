@@ -6,7 +6,8 @@ class MealDetailsScreen extends StatelessWidget {
       {super.key, required this.meal, required this.onToggleFavourites});
 
   final Meal meal;
-  final void Function(Meal meal) onToggleFavourites;
+  final void Function(Meal meal)
+      onToggleFavourites; //recieves function from Meals, which recieves it from Tabs.
 
   @override
   Widget build(BuildContext context) {
