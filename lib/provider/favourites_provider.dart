@@ -6,15 +6,17 @@ class FavouriteMealsNotifier extends StateNotifier<List<Meal>> {
   FavouriteMealsNotifier()
       : super([]); //pass data to super that was mentioned in the generic type
 
-  void _toggleFavouriteMealStatus(Meal meal) {
+  bool toggleFavouriteMealStatus(Meal meal) {
     final isMealFavourite = state.contains(
         meal); //state is the list that is passed to super. It is immutable and cannot be modified,
     //but can only be reassigned.
 
     if (isMealFavourite) {
       state = state.where((m) => m.id != meal.id).toList();
+      return false;
     } else {
       state = [...state, meal];
+      return true;
     }
   }
 }

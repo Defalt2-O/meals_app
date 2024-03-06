@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/provider/favourites_provider.dart';
 
-class MealDetailsScreen extends StatelessWidget {
+class MealDetailsScreen extends ConsumerWidget {
   const MealDetailsScreen({
     super.key,
     required this.meal,
@@ -12,13 +14,33 @@ class MealDetailsScreen extends StatelessWidget {
   //     onToggleFavourites; //recieves function from Meals, which recieves it from Tabs.
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    //ref doesn't need to be accepted in statelful widget as it is globally available,
+    //but here it needs to be passed to build by riverpod.
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              final isFavourite =
+                  ref //method has been changed from void to bool in fav provider.
+                      .read(favouriteMealsProvider.notifier)
+                      .toggleFavouriteMealStatus(
+                          meal); //the '.notifier' gives us access to the
+              //class created inside the 'favouriteMealsProvider' Provider.
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    isFavourite
+                        ? 'Meal has been added to favourites!'
+                        : 'Meal has been removed from favourites.',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              );
+            },
             icon: const Icon(Icons.star),
           ),
         ],

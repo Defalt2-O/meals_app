@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
-import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/provider/favourites_provider.dart';
 import 'package:meals_app/screens/categories.dart';
 import 'package:meals_app/screens/filters.dart';
@@ -37,25 +36,13 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     });
   }
 
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-
   // void _toggleMealFavouriteStatus(Meal meal) {
   //   final isExisting = favouriteMeals.contains(meal);
   //   if (isExisting) {
   //     setState(() {
   //       favouriteMeals.remove(meal);
   //     });
-  //     _showInfoMessage('Meal has been removed from Favourites!');
+  //     _showInfoMessage('Meal has been removed from Favourites!'); //show info message has been added to meal_details
   //   } else {
   //     setState(() {
   //       favouriteMeals.add(meal);
@@ -86,6 +73,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     final meals = ref.watch(
+        //watch returns whatever is returned by 'mealsProvider'
         mealsProvider); //by changing the widget from 'StatefulWidget' to 'ConsumerStatefulWidget', we have access
     //to ref..which can use 'watch' to listen for any changes in the 'mealsProvider' Provider
     //However, main must also be modified.
