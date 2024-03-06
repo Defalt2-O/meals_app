@@ -8,7 +8,9 @@ enum Filters {
 }
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({super.key});
+  const FiltersScreen({super.key, required this.currentFilters});
+
+  final Map<Filters, bool> currentFilters;
 
   @override
   State<FiltersScreen> createState() {
@@ -21,6 +23,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _lactoseFreeFilterSet = false;
   var _vegetarianFilterSet = false;
   var _veganFilterSet = false;
+  //we can't use widget. operator to initialise variables and we can only use them in methods. Therefore we call
+  @override
+  void initState() {
+    super.initState();
+    _glutenFreeFilterSet = widget.currentFilters[Filters.glutenFree]!;
+    _lactoseFreeFilterSet = widget.currentFilters[Filters.lactoseFree]!;
+    _vegetarianFilterSet = widget.currentFilters[Filters.vegetarian]!;
+    _veganFilterSet = widget.currentFilters[Filters.vegan]!;
+  }
 
   @override
   Widget build(BuildContext context) {
