@@ -19,7 +19,7 @@ class FavouriteMealsNotifier extends StateNotifier<List<Meal>> {
   }
 }
 
-final favouriteMeals =
+final favouriteMealsProvider =
     StateNotifierProvider<FavouriteMealsNotifier, List<Meal>>((ref) {
   //The StateNotifierProvider wants to know what type of data will be returned in the generic brackets.
   //Therefore first pass the class name that was created, and then pass the type that that class deals with.

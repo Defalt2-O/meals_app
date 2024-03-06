@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/provider/favourites_provider.dart';
 import 'package:meals_app/screens/categories.dart';
 import 'package:meals_app/screens/filters.dart';
 import 'package:meals_app/screens/meals.dart';
@@ -27,7 +28,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> favouriteMeals = [];
+  // final List<Meal> favouriteMeals = [];
   Map<Filters, bool> _selectedFilters = kInitialFilters;
 
   void _selectPage(int index) {
@@ -48,20 +49,20 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     );
   }
 
-  void _toggleMealFavouriteStatus(Meal meal) {
-    final isExisting = favouriteMeals.contains(meal);
-    if (isExisting) {
-      setState(() {
-        favouriteMeals.remove(meal);
-      });
-      _showInfoMessage('Meal has been removed from Favourites!');
-    } else {
-      setState(() {
-        favouriteMeals.add(meal);
-      });
-      _showInfoMessage('Meal has been added to Favourites!');
-    }
-  }
+  // void _toggleMealFavouriteStatus(Meal meal) {
+  //   final isExisting = favouriteMeals.contains(meal);
+  //   if (isExisting) {
+  //     setState(() {
+  //       favouriteMeals.remove(meal);
+  //     });
+  //     _showInfoMessage('Meal has been removed from Favourites!');
+  //   } else {
+  //     setState(() {
+  //       favouriteMeals.add(meal);
+  //     });
+  //     _showInfoMessage('Meal has been added to Favourites!');
+  //   }
+  // }
 
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
@@ -107,15 +108,17 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     ).toList();
 
     Widget activePage = CategoriesScreen(
-      ontoggleFavourites: _toggleMealFavouriteStatus,
       availableMeals: availableMeals,
     );
     String _selectedPage = 'Categories';
 
     if (_selectedPageIndex == 1) {
+      final favouriteMeals = ref.watch(
+          favouriteMealsProvider); //'favouriteMealsProvider' returns that empty state list, which is
+      //stored in favouriteMeals
       activePage = MealsScreen(
-          meals: favouriteMeals,
-          onToggleFavourites: _toggleMealFavouriteStatus);
+        meals: favouriteMeals,
+      );
       _selectedPage = 'Favourites';
     }
 

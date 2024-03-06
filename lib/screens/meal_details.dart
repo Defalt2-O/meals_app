@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
 
 class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen(
-      {super.key, required this.meal, required this.onToggleFavourites});
+  const MealDetailsScreen({
+    super.key,
+    required this.meal,
+  });
 
   final Meal meal;
-  final void Function(Meal meal)
-      onToggleFavourites; //recieves function from Meals, which recieves it from Tabs.
+  // final void Function(Meal meal)
+  //     onToggleFavourites; //recieves function from Meals, which recieves it from Tabs.
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +18,7 @@ class MealDetailsScreen extends StatelessWidget {
         title: Text(meal.title),
         actions: [
           IconButton(
-            onPressed: () {
-              onToggleFavourites(meal);
-            },
+            onPressed: () {},
             icon: const Icon(Icons.star),
           ),
         ],
