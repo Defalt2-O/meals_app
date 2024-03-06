@@ -1,12 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
-import 'package:meals_app/data/dummy_data.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/categories.dart';
 import 'package:meals_app/screens/filters.dart';
 import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/provider/meals_provider.dart';
 
 var kInitialFilters = {
   Filters.glutenFree: false,
@@ -15,16 +16,16 @@ var kInitialFilters = {
   Filters.vegan: false
 };
 
-class TabsScreen extends StatefulWidget {
+class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({super.key});
 
   @override
-  State<TabsScreen> createState() {
+  ConsumerState<TabsScreen> createState() {
     return _TabsScreenState();
   }
 }
 
-class _TabsScreenState extends State<TabsScreen> {
+class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> favouriteMeals = [];
   Map<Filters, bool> _selectedFilters = kInitialFilters;
@@ -83,7 +84,11 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final availableMeals = dummyMeals.where(
+    final meals = ref.watch(
+        mealsProvider); //by changing the widget from 'StatefulWidget' to 'ConsumerStatefulWidget', we have access
+    //to ref..which can use 'watch' to listen for any changes in the 'mealsProvider' Provider
+    //However, main must also be modified.
+    final availableMeals = meals.where(
       (meal) {
         if (_selectedFilters[Filters.glutenFree]! && !meal.isGlutenFree) {
           return false;
