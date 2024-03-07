@@ -7,7 +7,6 @@ import 'package:meals_app/screens/filters.dart';
 import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals_app/provider/meals_provider.dart';
 import 'package:meals_app/provider/filters_provider.dart';
 
 var kInitialFilters = {
@@ -67,29 +66,13 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final meals = ref.watch(
-        //watch returns whatever is returned by 'mealsProvider'
-        mealsProvider); //by changing the widget from 'StatefulWidget' to 'ConsumerStatefulWidget', we have access
-    //to ref..which can use 'watch' to listen for any changes in the 'mealsProvider' Provider
-    //However, main must also be modified.
-    final activeFilters = ref.watch(filtersProvider);
-    final availableMeals = meals.where(
-      (meal) {
-        if (activeFilters[Filters.glutenFree]! && !meal.isGlutenFree) {
-          return false;
-        }
-        if (activeFilters[Filters.lactoseFree]! && !meal.isLactoseFree) {
-          return false;
-        }
-        if (activeFilters[Filters.vegetarian]! && !meal.isVegetarian) {
-          return false;
-        }
-        if (activeFilters[Filters.vegan]! && !meal.isVegan) {
-          return false;
-        }
-        return true;
-      },
-    ).toList();
+    // final meals = ref.watch(
+    //     //watch returns whatever is returned by 'mealsProvider'
+    //     mealsProvider); //by changing the widget from 'StatefulWidget' to 'ConsumerStatefulWidget', we have access
+    // //to ref..which can use 'watch' to listen for any changes in the 'mealsProvider' Provider
+    // //However, main must also be modified.
+    // final activeFilters = ref.watch(filtersProvider);
+    final availableMeals = ref.watch(filteredMealsProvider);
 
     Widget activePage = CategoriesScreen(
       availableMeals: availableMeals,
