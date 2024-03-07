@@ -15,6 +15,9 @@ class MealDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favouriteMeals = ref.watch(favouriteMealsProvider);
+    final isFavouriteIcon = favouriteMeals.contains(meal);
+
     //ref doesn't need to be accepted in statelful widget as it is globally available,
     //but here it needs to be passed to build by riverpod.
     return Scaffold(
@@ -41,7 +44,7 @@ class MealDetailsScreen extends ConsumerWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.star),
+            icon: Icon(isFavouriteIcon ? Icons.star : Icons.star_border),
           ),
         ],
       ),
