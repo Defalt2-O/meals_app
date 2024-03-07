@@ -3,9 +3,7 @@ import 'package:meals_app/provider/filters_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FiltersScreen extends ConsumerStatefulWidget {
-  const FiltersScreen({super.key, required this.currentFilters});
-
-  final Map<Filters, bool> currentFilters;
+  const FiltersScreen({super.key});
 
   @override
   ConsumerState<FiltersScreen> createState() {
@@ -22,10 +20,11 @@ class _FiltersScreenState extends ConsumerState<FiltersScreen> {
   @override
   void initState() {
     super.initState();
-    _glutenFreeFilterSet = widget.currentFilters[Filters.glutenFree]!;
-    _lactoseFreeFilterSet = widget.currentFilters[Filters.lactoseFree]!;
-    _vegetarianFilterSet = widget.currentFilters[Filters.vegetarian]!;
-    _veganFilterSet = widget.currentFilters[Filters.vegan]!;
+    final activeFilters = ref.read(filtersProvider);
+    _glutenFreeFilterSet = activeFilters[Filters.glutenFree]!;
+    _lactoseFreeFilterSet = activeFilters[Filters.lactoseFree]!;
+    _vegetarianFilterSet = activeFilters[Filters.vegetarian]!;
+    _veganFilterSet = activeFilters[Filters.vegan]!;
   }
 
   @override
@@ -51,19 +50,15 @@ class _FiltersScreenState extends ConsumerState<FiltersScreen> {
       body: PopScope(
         //This is called when the system back button is used.
         canPop:
-            false, //We dont let it pop immediately because we still need some data
+            true, //We dont let it pop immediately because we still need some data
         onPopInvoked: (bool didPop) {
-          //As canPop was false, didPop was false as the system did not pop.
+          ref.read(filtersProvider.notifier).setFilters({
+            Filters.glutenFree: _glutenFreeFilterSet,
+            Filters.lactoseFree: _lactoseFreeFilterSet,
+            Filters.vegetarian: _vegetarianFilterSet,
+            Filters.vegan: _veganFilterSet,
+          });
           if (didPop) return;
-          Navigator.of(context).pop(
-            //We manually pop back and send data as we do back to the tabs screen.
-            {
-              Filters.glutenFree: _glutenFreeFilterSet,
-              Filters.lactoseFree: _lactoseFreeFilterSet,
-              Filters.vegetarian: _vegetarianFilterSet,
-              Filters.vegan: _veganFilterSet,
-            },
-          );
         },
         child: Column(
           children: [
@@ -157,3 +152,22 @@ class _FiltersScreenState extends ConsumerState<FiltersScreen> {
     );
   }
 }
+
+
+
+
+// canPop:
+//             false, //We dont let it pop immediately because we still need some data
+//         onPopInvoked: (bool didPop) {
+//           //As canPop was false, didPop was false as the system did not pop.
+//           if (didPop) return;
+//           Navigator.of(context).pop(
+//             //We manually pop back and send data as we do back to the tabs screen.
+//             {
+//               Filters.glutenFree: _glutenFreeFilterSet,
+//               Filters.lactoseFree: _lactoseFreeFilterSet,
+//               Filters.vegetarian: _vegetarianFilterSet,
+//               Filters.vegan: _veganFilterSet,
+//             },
+//           );
+//         },

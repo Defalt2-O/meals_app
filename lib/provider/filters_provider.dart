@@ -12,11 +12,15 @@ class FiltersNotifier extends StateNotifier<Map<Filters, bool>> {
       : super({
           Filters.glutenFree: false,
           Filters.lactoseFree: false,
-          Filters.vegetarian: true,
+          Filters.vegetarian: false,
           Filters.vegan: false,
         });
 
-  void setFilters(Filters filter, bool isActive) {
+  void setFilters(Map<Filters, bool> chosenFilters) {
+    state = chosenFilters;
+  }
+
+  void setFilter(Filters filter, bool isActive) {
     state = {
       ...state,
       filter: isActive,

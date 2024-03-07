@@ -29,7 +29,6 @@ class TabsScreen extends ConsumerStatefulWidget {
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
   // final List<Meal> favouriteMeals = [];
-  Map<Filters, bool> _selectedFilters = kInitialFilters;
 
   void _selectPage(int index) {
     setState(() {
@@ -55,19 +54,14 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      final result = await Navigator.of(context).push<Map<Filters, bool>>(
+      await Navigator.of(context).push<Map<Filters, bool>>(
+        //Tcontent inside the generic tag says which type of data will be returned.
         //Using push replacement causes the screen to not be pushed onto the stack of screens,
         //but to replace the currently viewed screen. Push replacement also doesn't add the back button.
         MaterialPageRoute(
-          builder: (ctx) => FiltersScreen(
-            currentFilters: _selectedFilters,
-          ),
+          builder: (ctx) => const FiltersScreen(),
         ),
       );
-
-      setState(() {
-        _selectedFilters = result ?? kInitialFilters;
-      });
     }
   }
 
@@ -78,18 +72,19 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         mealsProvider); //by changing the widget from 'StatefulWidget' to 'ConsumerStatefulWidget', we have access
     //to ref..which can use 'watch' to listen for any changes in the 'mealsProvider' Provider
     //However, main must also be modified.
+    final activeFilters = ref.watch(filtersProvider);
     final availableMeals = meals.where(
       (meal) {
-        if (_selectedFilters[Filters.glutenFree]! && !meal.isGlutenFree) {
+        if (activeFilters[Filters.glutenFree]! && !meal.isGlutenFree) {
           return false;
         }
-        if (_selectedFilters[Filters.lactoseFree]! && !meal.isLactoseFree) {
+        if (activeFilters[Filters.lactoseFree]! && !meal.isLactoseFree) {
           return false;
         }
-        if (_selectedFilters[Filters.vegetarian]! && !meal.isVegetarian) {
+        if (activeFilters[Filters.vegetarian]! && !meal.isVegetarian) {
           return false;
         }
-        if (_selectedFilters[Filters.vegan]! && !meal.isVegan) {
+        if (activeFilters[Filters.vegan]! && !meal.isVegan) {
           return false;
         }
         return true;
